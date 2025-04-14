@@ -18,9 +18,4 @@ This project implements a real-time object detection system that streams video f
 - [Requests](https://docs.python-requests.org/) for HTTP communication
 - [Flask](https://flask.palletsprojects.com/) for the local server
 
-## Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/AshishSrivatsav45/YourRepository.git
-   cd YourRepository
