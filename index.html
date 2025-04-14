@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Object Detection Output with Audio</title>
+  <script>
+    let lastText = '';
+    let audioEnabled = false;
+
+    // Function to speak text using the SpeechSynthesis API
+    function speak(text) {
+      if (!('speechSynthesis' in window)) {
+        console.log('Speech Synthesis is not supported in this browser.');
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 2;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Function to fetch detection data from the Flask server
+    function fetchData() {
+      fetch("/get")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("output").innerText = data.text;
+          // Speak the text if it's new and audio is enabled
+          if (audioEnabled && data.text && data.text !== lastText) {
+            lastText = data.text;
+            speak(data.text);
+          }
+        })
+        .catch(err => console.log("Error fetching data:", err));
+    }
+
+    // Enable audio when user clicks the button
+    function enableAudio() {
+      audioEnabled = true;
+      document.getElementById("enableAudio").style.display = "none";
+      console.log("Audio enabled");
+    }
+
+    // Poll the server every second for updates
+    setInterval(fetchData, 1000);
+  </script>
+</head>
+<body>
+  <h1>Live Object Detection Output with Audio</h1>
+  <div id="output">Waiting for data...</div>
+  <!-- Optional button to enable audio if needed -->
+  <button id="enableAudio" onclick="enableAudio()">Enable Audio</button>
+</body>
+</html>
