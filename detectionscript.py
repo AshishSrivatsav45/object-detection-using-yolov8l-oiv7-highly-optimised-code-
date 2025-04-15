@@ -10,7 +10,7 @@ args = parser.parse_args()
 frame_skip = args.skip
 
 # --- Configuration ---
-ip_stream_url = "http://192.168.137.164:8080/video"  # ESP32-CAM stream
+ip_stream_url = "http://<esp32_CAM ip address>:8080/video"  # ESP32-CAM stream
 model = YOLO("yolov8l-oiv7.pt")  # Load YOLO model
 announcement_interval = 5  # seconds before repeating same object
 
